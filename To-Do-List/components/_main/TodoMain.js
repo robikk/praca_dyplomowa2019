@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, Alert } from 'react-native';
 import { Container, View, Header, Title, Content, Footer, Button, Left, Right, Body, Icon, Text, } from 'native-base';
 import TodoItem from './TodoItem';
 import InputItem from './InputItem';
@@ -15,28 +15,43 @@ export default class TodoMain extends Component {
             todos: [],
             isVisible: false,
             chosenDate: '',
-            newTodoValue: '',
+            editTodo: false,
         }
     }
 
     addTodo = () => {
-        let todos = this.state.todos
+        if (this.state.todoInput.trim() == 0) {
+            alert('Please enter input!')
+        } 
+        else {
+            let todos = this.state.todos
 
-        todos.unshift({
-            id: todos.length + 1,
-            todo: this.state.todoInput,
-            done: false,
-            chosenDate: this.state.chosenDate
-        })
-        this.setState({
-            todos,
-            todoInput: '',
-        })
-        console.log(this.state.todos)
+            todos.unshift({
+                id: todos.length + 1,
+                todo: this.state.todoInput,
+                done: false,
+                chosenDate: this.state.chosenDate,
+            })
+            this.setState({
+                todos,
+                todo: '',
+            })
+            console.log(this.state.todos)     
+        }
     }
 
-    editItem = () => {
+    editItem = (item) => {
+        let todos = this.state.todos
+        todos = todos.filter((todo) => todo.id !== item.id);
+        const selectedTodo = this.state.todos.find((todo) => todo.id === item.id)
 
+        this.setState({
+            id: item.id,
+            todos: todos,
+            todoInput: selectedTodo.todo,
+            chosenDate: this.state.chosenDate,
+            editTodo: true,
+        })
     }
 
     removeItem = (item) => {
@@ -87,7 +102,7 @@ export default class TodoMain extends Component {
                 <Header>
                     <Left>
                         <Button transparent>
-                            <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}/>
+                            <Icon name="menu" onPress={() => this.props.navigation.openDrawer()} />
                         </Button>
                     </Left>
                     <Body>
@@ -120,6 +135,7 @@ export default class TodoMain extends Component {
                                         todoItem={item}
                                         toggleDone={() => this.toggleDone(item)}
                                         removeItem={() => this.removeItem(item)}
+                                        editItem={() => this.editItem(item)}
                                     />
                                 )
                             }}
@@ -135,21 +151,3 @@ export default class TodoMain extends Component {
         );
     }
 }
-
-/*
-const searchTask = (e) => {
-    const searchText = e.target.value.toLowerCase();
-    let filteredTaskList = [...storagedTaskList];
-
-    filteredTaskList = filteredTaskList.filter(task => task.toLowerCase().includes(searchText));
-
-    ul.textContent = '';
-    filteredTaskList.forEach((element) => {
-        ul.innerHTML += `<li>${element}</li>`;
-    })
-
-    if (e.target.value === '') {
-        renderTaskList();
-    }
-}
-*/

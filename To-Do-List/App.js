@@ -26,7 +26,7 @@ const MyDrawerNavigator = createDrawerNavigator(
   {
     drawerType: 'slide',
     drawerWidth: 200,
-    drawerBackgroundColor: '#1a1a1a'
+    drawerBackgroundColor: '#2a2a2a'
   }
 );
 

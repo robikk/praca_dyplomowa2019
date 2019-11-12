@@ -3,6 +3,7 @@ import { TouchableOpacity } from 'react-native'
 import { Button, Icon, Text, Form, Item, Input, InputGroup } from 'native-base';
 
 const InputItem = (props) => {
+    const clearInput = false;
     return (
         <Form>
             <Item inlineLabel>
@@ -10,11 +11,10 @@ const InputItem = (props) => {
                     <Input
                         placeholder='To do...'
                         onChangeText={(todoInput) => props.textChange(todoInput)}
-                        value={props.todoInput}
                     />
                     <Button iconLeft light onPress={props.addTodo}>
-                        <Icon name='add' />
-                        <Text>Add</Text>
+                        <Icon name='add'/>
+                        <Text>{props.editItem ? 'edit' : 'add'}</Text>
                     </Button>
                     <TouchableOpacity onPress={props.handlePicker}>
                         <Button iconLeft light onPress={props.showPicker}>
