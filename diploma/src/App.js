@@ -1,26 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { HashRouter, Route } from 'react-router-dom';
+import HomePage from './components/_design/HomePage';
+import Login from './components/_login/Login';
+import Registration from './components/_registration/Registration';
+import LeagueForm from './components/_main/LeagueForm';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+  render() {
+    return (
+      <HashRouter>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/Login" component={Login} />
+        <Route path="/Registration" component={Registration} />
+        <Route path="/LeagueForm" component={LeagueForm} />
+      </HashRouter>
+    )
+  }
 }
-
-export default App;
