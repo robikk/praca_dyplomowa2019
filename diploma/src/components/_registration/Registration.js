@@ -2,7 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { validationConstants } from '../_constants';
 import TextField from '@material-ui/core/TextField';
-import Navbar from '../_design/Navbar'; 
+import Navbar from '../_design/Navbar';
+import LockIcon from '@material-ui/icons/Lock';
+import Grid from '@material-ui/core/Grid';
+import EmailIcon from '@material-ui/icons/Email';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton'
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 export default class Registration extends React.Component {
   constructor(props) {
@@ -12,6 +19,8 @@ export default class Registration extends React.Component {
       password: '',
       repassword: '',
       submitted: false,
+      showPassword: false,
+      showRepassword: false,
     }
   }
 
@@ -21,6 +30,18 @@ export default class Registration extends React.Component {
       [name]: value,
     })
   }
+
+  handleClickShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  };
+
+  handleClickShowRepassword = () => {
+    this.setState({ showRepassword: !this.state.showRepassword });
+  }
+
+  handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -46,13 +67,21 @@ export default class Registration extends React.Component {
             <div className="col-xl-12 mt-3">
               <form name="form" onSubmit={this.handleSubmit}>
                 <div className={'form-group' + (submitted && !(validationConstants.emailValidation.test(email)) ? ' has-error ' : '')}>
-                  <TextField
-                    name='email'
-                    label="Email"
-                    margin="normal"
-                    value={email}
-                    onChange={this.handleChange}
-                  />
+                  <Grid container spacing={1} alignItems="flex-end" className="justify-content-center">
+                    <Grid item>
+                      <EmailIcon />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        name='email'
+                        label="Email"
+                        margin="normal"
+                        value={email}
+                        onChange={this.handleChange}
+                        style={{ width: 300 }}
+                      />
+                    </Grid>
+                  </Grid>
                   {
                     submitted && !email &&
                     <div className="text-danger h6">Field is required</div>
@@ -63,28 +92,70 @@ export default class Registration extends React.Component {
                   }
                 </div>
                 <div className={'form-group' + (submitted && !(password.length > 5) ? ' has-error ' : '')}>
-                  <TextField
-                    name='password'
-                    label="Password"
-                    type="password"
-                    margin="normal"
-                    value={password}
-                    onChange={this.handleChange}
-                  />
+                  <Grid container spacing={1} alignItems="flex-end" className="justify-content-center">
+                    <Grid item>
+                      <LockIcon />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        name='password'
+                        label="Password"
+                        type={this.state.showPassword ? 'text' : 'password'}
+                        margin="normal"
+                        value={password}
+                        onChange={this.handleChange}
+                        style={{ width: 300 }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={this.handleClickShowPassword}
+                                onMouseDown={this.handleMouseDownPassword}
+                              >
+                                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                              </IconButton>
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
                   {
                     submitted && !password &&
                     <div className="text-danger h6">Field is required!</div>
                   }
                 </div>
                 <div className={'form-group' + (submitted && (!(password === repassword) || !(repassword)) ? ' has-error ' : '')}>
-                  <TextField
-                    name='repassword'
-                    label="Repassword"
-                    type="password"
-                    margin="normal"
-                    value={repassword}
-                    onChange={this.handleChange}
-                  />
+                  <Grid container spacing={1} alignItems="flex-end" className="justify-content-center">
+                    <Grid item>
+                      <LockIcon />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        name='repassword'
+                        label="Repassword"
+                        type={this.state.showRepassword ? 'text' : 'password'}
+                        margin="normal"
+                        value={repassword}
+                        onChange={this.handleChange}
+                        style={{ width: 300 }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={this.handleClickShowRepassword}
+                                onMouseDown={this.handleMouseDownPassword}
+                              >
+                                {this.state.showRepassword ? <Visibility /> : <VisibilityOff />}
+                              </IconButton>
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
                   {
                     submitted && !repassword &&
                     <div className="text-danger h6">Field is required!</div>

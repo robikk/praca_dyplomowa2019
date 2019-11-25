@@ -6,10 +6,6 @@ import UpdateUser from '../_profile/UpdateUser';
 import DeleteAcc from '../_profile/DeleteAcc';
 
 export default class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
 
   render() {
     return (
@@ -24,10 +20,10 @@ export default class Navbar extends React.Component {
               <Link className="nav-link" to='/LeagueForm'>Add league <span className="sr-only">(current)</span></Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Cos2</a>
+              <Link className="nav-link" to='/'>Schedule</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Cos3</a>
+              <Link className="nav-link" to="/">Cos3</Link>
             </li>
           </ul>
           <div className=" collapse navbar-collapse" id="navbarDropdown">
@@ -40,6 +36,9 @@ export default class Navbar extends React.Component {
                   <UpdateUser />
                   <Repass />
                   <DeleteAcc />
+                  <Link className="dropdown-item" to="/login">
+                    My Leagues stats
+                </Link>
                   <Link
                     className="dropdown-item"
                     to="/login"
