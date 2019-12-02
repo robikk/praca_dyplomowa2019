@@ -1,0 +1,49 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaUserAlt } from 'react-icons/fa'
+import Repass from '../_profile/Repass';
+import UpdateUser from '../_profile/UpdateUser';
+import DeleteAcc from '../_profile/DeleteAcc';
+import LogoutUser from '../_profile/LogoutUser';
+
+export default class Navbar extends React.Component {
+  render() {
+    return (
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <Link className="navbar-brand" to='/'>LeagueApp</Link>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDropdown" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarDropdown">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <Link className="nav-link" to='/LeagueForm'>Add league <span className="sr-only">(current)</span></Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to='/Schedule'>Schedule</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/">Cos3</Link>
+            </li>
+          </ul>
+          <div className=" collapse navbar-collapse" id="navbarDropdown">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle mr-3" href=" # " id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <FaUserAlt size={32} />
+                </a>
+                <div className="dropdown-menu p-0 bg-success" aria-labelledby="navbarDropdown">
+                  <UpdateUser />
+                  <Repass />
+                  <DeleteAcc />
+                  <LogoutUser />
+                </div>
+              </li>
+            </ul>
+            <Link to="/login"><button className="btn btn-primary">Login</button></Link>
+          </div>
+        </div>
+      </nav>
+    );
+  }
+}
